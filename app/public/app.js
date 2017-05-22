@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $("#submit").click(function(){
+  $("#submit").click(function() {
     var name = $("#name").val();
     var photo = $("#photo").val();
     var isValid = true;
@@ -14,22 +14,25 @@ $(document).ready(function() {
         answers.push($(val).text());
       }
     });
-    
-    if(isValid){
-      console.log(answers);
+
+    if(isValid) {
+
       $.ajax({
         method: "POST",
         url: "/api/friends",
         data: { "name": name, "img":photo, "answers":answers },
         dataType: "json"
       })
-      .done(function( data ) {
-        console.log(data);
+      .done(function(result) {
+        console.log(result.name);
+        $("#namePop").html("Name: "+ result.name);
+        $("#photoImg").html("<img src='"+ result.img+ "' alt='Smiley face' height='42' width='42'>");
+        $("#popup").modal('show')
       });
     }
   });
 
-  $(".dropdown-menu li").click(function(e) {
-    console.log($(this).parent().siblings().html(this.value+"<span class='caret'></span>"));
+  $(".dropdown-menu li").click(function() {
+    $(this).parent().siblings().html(this.value+"<span class='caret'></span>");
   });
-})
+});
